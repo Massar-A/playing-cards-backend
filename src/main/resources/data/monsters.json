@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Pik",
+    "image": "img/monsters/pik.jpg",
+    "hp": 40,
+    "type": "ELECTRIC",
+    "figureCaption": "N°002 Pik"
+  },
+  {
+    "id": 2,
+    "name": "Car",
+    "image": "img/monsters/car.png",
+    "hp": 60,
+    "type": "WATER",
+    "figureCaption": "N°003 Car"
+  },
+  {
+    "id": 3,
+    "name": "Bulb",
+    "image": "img/monsters/bulb.jpg",
+    "hp": 80,
+    "type": "PLANT",
+    "figureCaption": "N°004 Bulb"
+  },
+  {
+    "id": 4,
+    "name": "Sala",
+    "image": "img/monsters/sala.jpg",
+    "hp": 50,
+    "type": "FIRE",
+    "figureCaption": "N°005 Sala"
+  }
+]
