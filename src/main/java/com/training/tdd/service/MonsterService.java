@@ -18,4 +18,13 @@ public record MonsterService(MonsterRepository monsterRepository) {
     public Optional<Monster> findById(String id) {
         return monsterRepository.findById(id);};
     public List<Monster> saveAllMonsters(List<Monster> monsters) {return monsterRepository.saveAll(monsters);}
+
+    public Optional<Monster> updateMonster(String id, Monster monster) {
+        Optional<Monster> existingMonster = monsterRepository.findById(id);
+        if (existingMonster.isPresent()) {
+            Monster monsterToUpdate = existingMonster.get();
+
+        }
+        return existingMonster;
+    }
 }

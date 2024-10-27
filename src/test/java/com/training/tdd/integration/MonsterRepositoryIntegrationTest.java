@@ -35,10 +35,11 @@ public class MonsterRepositoryIntegrationTest {
     @Test
     public void testSaveAndFindMonster() {
         // Création d'un monstre
-        Monster monster = new Monster();
-        monster.setName("Rai");
-        monster.setHp(100);
-        monster.setType(Type.ELECTRIC);
+        Monster monster = Monster.builder()
+                .name("Rai")
+                .hp(100)
+                .type(Type.ELECTRIC)
+                .build();
 
         // Sauvegarder le monstre dans la base de données
         monsterService.saveMonster(monster);
@@ -55,8 +56,19 @@ public class MonsterRepositoryIntegrationTest {
     public void testSaveMultiplesMonsters() {
 
         List<Monster> monsters = Arrays.asList(
-                new Monster("Rai", "/img/rai.png", Type.ELECTRIC, 100, "n°19 RAI"),
-                new Monster("Draco", "/img/draco.png", Type.FIRE, 200, "N°20 DRACO")
+                Monster.builder()
+                        .name("Rai")
+                        .hp(100)
+                        .type(Type.ELECTRIC)
+                        .image("/img/rai.png")
+                        .build(),
+                Monster.builder()
+                        .name("Draco")
+                        .hp(100)
+                        .type(Type.FIRE)
+                        .image("/img/draco.png")
+                        .figureCaption("N°20 DRACO")
+                        .build()
         );
 
         // Sauvegarder les monstres dans la base de données
@@ -70,7 +82,13 @@ public class MonsterRepositoryIntegrationTest {
 
     @Test
     public void testFindMonsterById() {
-        Monster monster = new Monster("Magicarp", "/img/magic.png", Type.WATER, 20, "n°19 MAGI");
+        Monster monster = Monster.builder()
+                .name("Draco")
+                .hp(100)
+                .type(Type.FIRE)
+                .image("/img/draco.png")
+                .figureCaption("N°20 DRACO")
+                .build();
         Monster savedMonster = monsterService.saveMonster(monster);
 
         // Récupération par ID
@@ -81,7 +99,13 @@ public class MonsterRepositoryIntegrationTest {
 
     @Test
     public void testUpdateMonster() {
-        Monster monster = new Monster("Golem", 200, Type.ROCK);
+        Monster monster = Monster.builder()
+                .name("Draco")
+                .hp(100)
+                .type(Type.FIRE)
+                .image("/img/draco.png")
+                .figureCaption("N°20 DRACO")
+                .build();
         Monster savedMonster = monsterService.saveMonster(monster);
 
         // Mise à jour des détails
@@ -96,7 +120,13 @@ public class MonsterRepositoryIntegrationTest {
 
     @Test
     public void testDeleteMonster() {
-        Monster monster = new Monster("Racaill", 90, Type.ROCK);
+        Monster monster = Monster.builder()
+                .name("Draco")
+                .hp(100)
+                .type(Type.FIRE)
+                .image("/img/draco.png")
+                .figureCaption("N°20 DRACO")
+                .build();
         Monster savedMonster = monsterService.saveMonster(monster);
 
         // Suppression du monstre

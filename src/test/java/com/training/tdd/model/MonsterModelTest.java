@@ -7,27 +7,29 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@AutoConfigureMockMvc
 public class MonsterModelTest {
 
     @Test
     public void testMonsterCreationWithMandatoryFields() throws Exception {
-        Monster monster = new Monster();
-        monster.setName("Rai");
-        monster.setHp(100);
-        monster.setType(Type.ELECTRIC);
+        Monster monster = Monster.builder()
+                .name("Draco")
+                .hp(100)
+                .type(Type.FIRE)
+                .image("/img/draco.png")
+                .figureCaption("N°20 DRACO")
+                .build();
 
         // Vérification des valeurs initialisées
-        assertEquals("Rai", monster.getName(), "Le nom du monstre ne correspond pas");
+        assertEquals("Draco", monster.getName(), "Le nom du monstre ne correspond pas");
         assertEquals(100, monster.getHp(), "Les points de vie du monstre ne correspondent pas");
-        assertEquals(Type.ELECTRIC, monster.getType(), "Le type du monstre ne correspond pas");
+        assertEquals(Type.FIRE, monster.getType(), "Le type du monstre ne correspond pas");
 
     }
 
     @Test
     public void testMonsterUserIdsInitialization() {
         // Création d'un monstre
-        Monster monster = new Monster();
+        Monster monster = Monster.builder().build();
 
         // Vérification que la liste d'IDs de users est initialisée vide
         assertNotNull(monster.getUsers(), "La liste des utilisateurs ne doit pas être nulle");
@@ -37,7 +39,7 @@ public class MonsterModelTest {
     @Test
     public void testAddUserToMonster() {
         // Création d'un monstre
-        Monster monster = new Monster();
+        Monster monster = Monster.builder().build();
 
         // Ajout d'un ID de User
         String userId = "user1";

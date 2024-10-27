@@ -1,31 +1,37 @@
 package com.training.tdd.controller;
 
-import com.training.tdd.model.Monster;
-import com.training.tdd.model.User;
+import com.training.tdd.mapper.MonsterMapper;
+import com.training.tdd.mapper.MonsterMapperImpl;
+import com.training.tdd.repository.MonsterRepository;
+import com.training.tdd.service.MonsterService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @WebMvcTest(MonsterController.class)
 @AutoConfigureMockMvc
+@Import(MonsterMapperImpl.class)
 class MonsterControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    List<Monster> posts = new ArrayList<>();
-    User user = new User();
+    @MockBean // Utiliser MockBean pour mocker le repository
+    private MonsterRepository monsterRepository;
 
-    String post = "{\"user\": 10,\"id\": 100,\"title\": \"at nam consequatur ea labore ea harum\",\"body\": \"cupiditate quo est a modi nesciunt soluta\nipsa voluptas error itaque dicta in\nautem qui minus magnam et distinctio eum\naccusamus ratione error aut\"}";
+    @MockBean // Mock pour MonsterService
+    private MonsterService monsterService;
 
     @BeforeEach
     public void setUp() {
@@ -37,14 +43,8 @@ class MonsterControllerTest {
 
     // LIST
     @Test
-    public void shouldFindAllPosts() throws Exception {
-        mockMvc.perform(get("/posts"))
+    public void shouldFindAllMonsters() throws Exception {
+        mockMvc.perform(get("/monster"))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    public void shouldSavePost() throws Exception {
-        mockMvc.perform(post("/posts").contentType("application/json").content(post))
-                .andExpect(status().isCreated());
     }
 }

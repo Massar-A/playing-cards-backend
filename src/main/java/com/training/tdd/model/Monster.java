@@ -1,6 +1,7 @@
 package com.training.tdd.model;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.bson.types.ObjectId;
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Data
 @EqualsAndHashCode(callSuper= false)
 @Document(collection = "monsters")
@@ -47,21 +49,7 @@ public class Monster {
     private String attackDescription;
 
     @Field("users")
+    @Builder.Default
     private List<String> users = new ArrayList<>();
 
-    public Monster(String name, String image, Type type, int hp, String figureCaption) {
-        this.name = name;
-        this.image = image;
-        this.type = type;
-        this.hp = hp;
-        this.figureCaption = figureCaption;
-    }
-
-    public Monster() {}
-
-    public Monster(String name, int hp, Type type) {
-        this.name = name;
-        this.hp = hp;
-        this.type = type;
-    }
 }

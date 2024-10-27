@@ -9,7 +9,7 @@ public class UserModelTest {
     @Test
     public void testUserCreationWithEmptyMonsters() {
         // Étape 1 : Créer un utilisateur sans monstres associés
-        User user = new User();
+        User user = User.builder().build();
 
         // Étape 3 : Vérifier que la liste de monstres est vide
         assertNotNull(user.getMonsters(), "La liste de monstres ne doit pas être nulle");
@@ -19,7 +19,7 @@ public class UserModelTest {
     @Test
     public void testAddMonsterToUser() {
         // Création d'un utilisateur
-        User user = new User();
+        User user = User.builder().build();
 
         // Ajout d'un ID de Monster
         String monsterId = "monster1";
@@ -27,7 +27,7 @@ public class UserModelTest {
 
         // Vérification que la liste des monstres contient bien cet ID
         assertEquals(1, user.getMonsters().size(), "La liste devrait contenir un monstre");
-        assertEquals(monsterId, user.getMonsters().get(0), "L'ID du monstre ne correspond pas");
+        assertEquals(monsterId, user.getMonsters().getFirst(), "L'ID du monstre ne correspond pas");
     }
 
 }
