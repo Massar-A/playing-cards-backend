@@ -8,24 +8,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Builder
 @Data
-@EqualsAndHashCode(callSuper=false)
-public class MonsterCreationDTO {
-    @NotNull
+@Builder
+@EqualsAndHashCode(callSuper = false)
+public class MonsterPatchDTO {
     private String name;
-    @NotNull
     private String image;
-
-    @NotNull
     private Type type;
 
-    @NotNull
     @DecimalMin("1")
     @DecimalMax("200")
     private Integer hp;
 
-    @NotNull
     private String figureCaption;
 
     private String attackName;

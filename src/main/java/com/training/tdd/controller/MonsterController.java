@@ -1,12 +1,13 @@
 package com.training.tdd.controller;
 
+import com.training.tdd.dto.MonsterCreationDTO;
 import com.training.tdd.dto.MonsterOutDTO;
+import com.training.tdd.dto.MonsterPatchDTO;
 import com.training.tdd.mapper.MonsterMapper;
 import com.training.tdd.model.Monster;
+import com.training.tdd.patcher.Patcher;
 import com.training.tdd.service.MonsterService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,8 @@ import java.util.Optional;
 @RequestMapping("/monster")
 public record MonsterController(
         MonsterMapper monsterMapper,
-        MonsterService monsterService
+        MonsterService monsterService,
+        Patcher patcher
 ) {
 
     @GetMapping("")
@@ -37,17 +39,23 @@ public record MonsterController(
         }
     }
 
-    /*@PutMapping("/{id}")
-    public ResponseEntity<MonsterOutDTO> updateMonster(@PathVariable String id, @RequestBody MonsterCreationDTO monsterBody) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<MonsterOutDTO> updateMonster(@PathVariable String id, @RequestBody MonsterPatchDTO monsterBody) throws IllegalAccessException {
         Optional<Monster> monster = monsterService.findById(id);
         if (monster.isPresent()) {
-            monsterService.saveMonster(monsterBody);
+            Monster monsterToUpdate = monster.get();
+            patcher.patchMonster(monsterToUpdate, monsterBody);
+            monsterService.saveMonster(monsterToUpdate);
+            return new ResponseEntity<>(monsterMapper.toMonsterOutDTO(monsterToUpdate), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }*/
+    }
 
     @PostMapping("")
-    public ResponseEntity<MonsterOutDTO> createMonster(@Valid @RequestBody Monster monster) {
-        Monster createdMonster = monsterService.saveMonster(monster);
+    public ResponseEntity<MonsterOutDTO> createMonster(@Valid @RequestBody MonsterCreationDTO monster) {
+        Monster monsterToCreate = monsterMapper.fromCreationtoMonster(monster);
+        Monster createdMonster = monsterService.saveMonster(monsterToCreate);
         MonsterOutDTO monsterOutDTO = monsterMapper.toMonsterOutDTO(createdMonster);
         return new ResponseEntity<>(monsterOutDTO, HttpStatus.CREATED);
     }
